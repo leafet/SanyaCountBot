@@ -14,14 +14,14 @@ intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 
 # Укажите ваш ID канала
-CHANNEL_ID = 1563065598836084817
+CHANNEL_ID = 1559642843407192155
 
 # НАСТРОЙКА ВРЕМЕНИ ОБНОВЛЕНИЯ (например, каждый день в 00:00 по Москве)
 MY_TZ = zoneinfo.ZoneInfo("Europe/Moscow")
 CRON_TIME = datetime.time(hour=0, minute=0, second=0, tzinfo=MY_TZ)
 
 
-@tasks.loop(minutes=6)
+@tasks.loop(time=CRON_TIME)
 async def update_channel_counter():
     await client.wait_until_ready()
     channel = client.get_channel(CHANNEL_ID)
@@ -44,12 +44,12 @@ async def update_channel_counter():
                 next_day = 1
 
             # 2. Формируем новое название и обновляем канал
-            new_name = f"день-{next_day}"
+            new_name = f"саня-в-армии-день-{next_day}"
             await channel.edit(name=new_name)
             print(f"Канал обновлен с '{current_name}' на '{new_name}'")
 
             # 3. Отправляем сообщение
-            await channel.send(f"📅 Наступил **день {next_day}**!")
+            await channel.send(f"Наступил день **{next_day}**!")
 
         except discord.Forbidden:
             print("Ошибка: У бота нет прав на управление этим каналом.")
