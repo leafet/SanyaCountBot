@@ -21,7 +21,7 @@ MY_TZ = zoneinfo.ZoneInfo("Europe/Moscow")
 CRON_TIME = datetime.time(hour=0, minute=0, second=0, tzinfo=MY_TZ)
 
 
-@tasks.loop(time=CRON_TIME)
+@tasks.loop(minutes=6)
 async def update_channel_counter():
     await client.wait_until_ready()
     channel = client.get_channel(CHANNEL_ID)
